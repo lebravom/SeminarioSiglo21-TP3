@@ -1,0 +1,58 @@
+.BannerSuperior{
+    -fx-background-color:linear-gradient(to top right, #B8707A, #F6EDEE );
+    -fx-border-color: #000;
+    -fx-border-width: .4px .4px .4px .4px;
+}
+
+.menuItem{
+    -fx-padding: 5px;
+    -fx-background-color: #D7ADAD;
+    -fx-margin: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-font-family: Tahoma;
+    -fx-font-size: 13px;
+}
+
+.menuItem:hover{
+    -fx-background-color: #942525;
+}
+
+.cerrar{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.cerrar:hover{
+    -fx-background-color: #ff496a;
+}
+
+.minimizar{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.minimizar:hover{
+    -fx-background-color: #ddd;
+}
+
+.salir{
+    -fx-background-color: #D7ADAD;
+    -fx-cursor:hand;
+    -fx-background-radius: 20px;
+}
+
+.salir:hover{
+    -fx-background-color: #942525;
+}
+
+.sombra{
+    -fx-background-color : #F2E4E4;
+    -fx-background-radius: 8px;
+    -fx-padding: 5px;
+}
+
+.contenedorIndicador{
+    -fx-background-color: #E4C8C8;
+    -fx-background-radius: 8px;
+}

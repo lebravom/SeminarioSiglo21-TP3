@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.siglo21.app.Controller.principalController">
+   <children>
+      <AnchorPane fx:id="principalVista" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane id="BannerSuperior" prefHeight="100.0" prefWidth="1100.0" styleClass="BannerSuperior" stylesheets="@principalStyle.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label layoutX="23.0" layoutY="35.0" text="Software de gestión de planificación">
+                           <font>
+                              <Font name="Tahoma Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Button id="minimizar" fx:id="minimizar" layoutX="992.0" layoutY="-1.0" mnemonicParsing="false" onAction="#minimizar" styleClass="minimizar" stylesheets="@principalStyle.css" text="-">
+                           <font>
+                              <Font name="Tahoma Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button id="cerrar" fx:id="cerrar" layoutX="1046.0" layoutY="-1.0" mnemonicParsing="false" onAction="#close" styleClass="cerrar" stylesheets="@principalStyle.css" text="X">
+                           <font>
+                              <Font name="Tahoma Bold" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Accordion styleClass="salir" stylesheets="@principalStyle.css">
+                          <panes>
+                            <TitledPane id="Material" animated="false" styleClass="salir" stylesheets="@principalStyle.css" text="Gestionar Artículos">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox>
+                                             <children>
+                                                <Button id="crearMaterial" fx:id="crearMaterial" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Crear Artículo" />
+                                                <Button id="modificarMaterial" fx:id="modificarMaterial" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Modificar Artículo" />
+                                                <Button id="eliminarMaterial" fx:id="eliminarMaterial" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Egresar Artículo" />
+                                                <Button id="buscarMaterial" fx:id="buscarMaterial" layoutX="10.0" layoutY="62.0" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Buscar Artículo" />
+                                                <Button id="reporteMaterial" fx:id="reporteMaterial" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Reportes" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </TitledPane>
+                            <TitledPane id="Diseño" animated="false" text="Gestionar Diseños">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                            <TitledPane id="Producción" animated="false" text="Gestionar Programaciones">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                              <TitledPane id="Planificación" animated="false" text="Gestionar Planificaciones">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                </content>
+                              </TitledPane>
+                          </panes>
+                        </Accordion>
+                        <Button id="salir" fx:id="salir" layoutX="1.0" layoutY="456.0" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="200.0" styleClass="salir" stylesheets="@principalStyle.css" text="Salir" />
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox id="reporteMateriales" fx:id="reportes" prefHeight="501.0" prefWidth="898.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="sombra" stylesheets="@principalStyle.css">
+                                 <children>
+                                    <HBox prefHeight="198.0" prefWidth="878.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane id="primerRecuadro" prefHeight="170.0" prefWidth="280.0" styleClass="contenedorIndicador" stylesheets="@principalStyle.css">
+                                             <children>
+                                                <Label id="cantidadLabel" layoutX="30.0" layoutY="14.0" prefHeight="40.0" text="Artículos en Stock" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="14.0">
+                                                   <font>
+                                                      <Font name="Tahoma" size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label id="cantidadLabel" fx:id="cantidadArticulos" contentDisplay="RIGHT" layoutX="27.0" layoutY="133.0" prefHeight="40.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                                   <font>
+                                                      <Font name="Tahoma" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane id="segundoRecuadro" prefHeight="170.0" prefWidth="280.0" styleClass="contenedorIndicador" stylesheets="@principalStyle.css">
+                                             <children>
+                                                <Label id="cantidadLabel" layoutX="20.0" layoutY="14.0" prefHeight="40.0" text="Cantidad de tipos de Articulos" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="14.0">
+                                                   <font>
+                                                      <Font name="Tahoma" size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label id="cantidadLabel" fx:id="diarioLabel" contentDisplay="RIGHT" layoutX="35.0" layoutY="133.0" prefHeight="40.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                                   <font>
+                                                      <Font name="Tahoma" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane id="tercerRecuadro" prefHeight="170.0" prefWidth="280.0" styleClass="contenedorIndicador" stylesheets="@principalStyle.css">
+                                             <children>
+                                                <Label id="cantidadLabel" layoutX="20.0" layoutY="14.0" prefHeight="40.0" text="Promedio 30 dias" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="14.0">
+                                                   <font>
+                                                      <Font name="Tahoma" size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label id="cantidadLabel" fx:id="promedioLabel" contentDisplay="RIGHT" layoutX="45.0" layoutY="143.0" prefHeight="40.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                                   <font>
+                                                      <Font name="Tahoma" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="273.0" prefWidth="878.0" styleClass="sombra" stylesheets="@principalStyle.css">
+                                 <children>
+                                    <HBox prefHeight="257.0" prefWidth="878.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <AnchorPane id="tortaMateriales" prefWidth="477.0" styleClass="contenedorIndicador" stylesheets="@principalStyle.css">
+                                             <children>
+                                                <PieChart fx:id="pieChartCategorias" layoutX="-236.0" layoutY="-186.0" prefHeight="247.0" prefWidth="429.0" title="Categoria de artículos" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane id="barrasMateriales" prefWidth="477.0" styleClass="contenedorIndicador" stylesheets="@principalStyle.css">
+                                             <children>
+                                                <BarChart fx:id="barChartProveedores" prefHeight="400.0" prefWidth="500.0" title="Top Proveedores" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <xAxis>
+                                                    <CategoryAxis fx:id="ejeX" side="BOTTOM" />
+                                                  </xAxis>
+                                                  <yAxis>
+                                                    <NumberAxis fx:id="ejeY" side="LEFT" />
+                                                  </yAxis>
+                                                </BarChart>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox id="crearMaterial" fx:id="crearArticulo" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="898.0" styleClass="sombra" stylesheets="@principalStyle.css" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <GridPane prefHeight="489.0" prefWidth="929.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Crear nuevo Artículo">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Codigo Identificador" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Nombre" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Descripción" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Categoria" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Marca" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Unidad de Medida" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="Fecha de ingreso" GridPane.rowIndex="8">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="Fecha de vencimiento" GridPane.rowIndex="9">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="Alerta Stock Minimo" GridPane.rowIndex="11">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="Proveedor" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <Button fx:id="cancelarCrearArticulo" mnemonicParsing="false" onAction="#cancelarCrearArticulo" styleClass="salir" stylesheets="@principalStyle.css" text="Cancelar" GridPane.rowIndex="13">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Button>
+                                    <Button fx:id="validarCrearArticulo" mnemonicParsing="false" onAction="#validarCrearArticulo" styleClass="salir" stylesheets="@principalStyle.css" text="Validar" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                       <GridPane.margin>
+                                          <Insets left="80.0" />
+                                       </GridPane.margin>
+                                    </Button>
+                                    <Button fx:id="grabarCrearArticulo" mnemonicParsing="false" onAction="#grabarCrearArticulo" styleClass="salir" stylesheets="@principalStyle.css" text="Grabar" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                       <GridPane.margin>
+                                          <Insets left="200.0" />
+                                       </GridPane.margin>
+                                    </Button>
+                                    <TextField fx:id="codigoTextField" promptText="Ej.: 456-8521-100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="nombreTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="descripcionTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <ChoiceBox fx:id="proveedorChoiceBox" prefHeight="26.0" prefWidth="410.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <ChoiceBox fx:id="categoriaChoiceBox" prefWidth="410.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <ChoiceBox fx:id="marcaChoiceBox" prefWidth="410.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <ChoiceBox fx:id="unidadChoiceBox" prefWidth="410.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <DatePicker fx:id="ingresoDate" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <DatePicker fx:id="vencimientoDate" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                    <TextField fx:id="cantidadTextField" promptText="Valor por defecto 1" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                    <Label text="Cantidad a ingresar" GridPane.rowIndex="10">
+                                       <font>
+                                          <Font name="Tahoma" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <TextField fx:id="alertaTextField" promptText="Valor por defecto 1" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="20.0" right="20.0" />
+                                 </padding>
+                              </GridPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
