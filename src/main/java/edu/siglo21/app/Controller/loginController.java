@@ -1,21 +1,19 @@
 package edu.siglo21.app.Controller;
 
 import edu.siglo21.app.App;
-import edu.siglo21.app.Model.Usuario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
+import java.net.URL;
 
 public class loginController {
 
@@ -60,6 +58,7 @@ public class loginController {
             alerta.showAndWait();
 
             Parent root = FXMLLoader.load(App.class.getResource("principalVista.fxml"));
+            //Parent root = FXMLLoader.load(App.class.getResource("principalVista.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);
 

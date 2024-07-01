@@ -1,17 +1,12 @@
 package edu.siglo21.app;
 
-import edu.siglo21.app.Model.Articulo;
 import javafx.application.Application;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class App extends Application {
     private double x = 0;

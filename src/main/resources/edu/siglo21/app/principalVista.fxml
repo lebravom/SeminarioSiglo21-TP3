@@ -10,6 +10,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.siglo21.app.Controller.principalController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.siglo21.app.Controller.principalController">
    <children>
       <AnchorPane fx:id="principalVista" prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -35,12 +37,12 @@
                               <Font name="Tahoma Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Button id="minimizar" fx:id="minimizar" layoutX="992.0" layoutY="-1.0" mnemonicParsing="false" onAction="#minimizar" styleClass="minimizar" stylesheets="@principalStyle.css" text="-">
+                        <Button id="minimizar" fx:id="minimizar" layoutX="1392.0" layoutY="5.0" mnemonicParsing="false" onAction="#minimizar" styleClass="minimizar" stylesheets="@principalStyle.css" text="-">
                            <font>
                               <Font name="Tahoma Bold" size="24.0" />
                            </font>
                         </Button>
-                        <Button id="cerrar" fx:id="cerrar" layoutX="1046.0" layoutY="-1.0" mnemonicParsing="false" onAction="#close" styleClass="cerrar" stylesheets="@principalStyle.css" text="X">
+                        <Button id="cerrar" fx:id="cerrar" layoutX="1446.0" layoutY="5.0" mnemonicParsing="false" onAction="#close" styleClass="cerrar" stylesheets="@principalStyle.css" text="X">
                            <font>
                               <Font name="Tahoma Bold" size="24.0" />
                            </font>
@@ -59,11 +61,11 @@
                                        <children>
                                           <VBox>
                                              <children>
-                                                <Button id="crearMaterial" fx:id="crearMaterial" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Crear Artículo" />
-                                                <Button id="modificarMaterial" fx:id="modificarMaterial" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Modificar Artículo" />
-                                                <Button id="eliminarMaterial" fx:id="eliminarMaterial" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Egresar Artículo" />
-                                                <Button id="buscarMaterial" fx:id="buscarMaterial" layoutX="10.0" layoutY="62.0" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Buscar Artículo" />
-                                                <Button id="reporteMaterial" fx:id="reporteMaterial" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Reportes" />
+                                                <Button id="crearMaterial" fx:id="crearArticuloMenu" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Crear Artículo" />
+                                                <Button id="modificarMaterial" fx:id="modificarArticuloMenu" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Modificar Artículo" />
+                                                <Button id="eliminarMaterial" fx:id="eliminarArticuloMenu" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Egresar Artículo" />
+                                                <Button id="buscarMaterial" fx:id="buscarArticuloMenu" layoutX="10.0" layoutY="62.0" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Buscar Artículo" />
+                                                <Button id="reporteMaterial" fx:id="reporteArticuloMenu" mnemonicParsing="false" onAction="#cambiarVista" prefWidth="200.0" styleClass="menuItem" stylesheets="@principalStyle.css" text="Reportes" />
                                              </children>
                                           </VBox>
                                        </children>
@@ -94,7 +96,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox id="reporteMateriales" fx:id="reportes" prefHeight="501.0" prefWidth="898.0" spacing="10.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox id="reporteMateriales" fx:id="reportesVbox" prefHeight="501.0" prefWidth="898.0" spacing="10.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -182,7 +184,7 @@
                               </AnchorPane>
                            </children>
                         </VBox>
-                        <VBox id="crearMaterial" fx:id="crearArticulo" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="898.0" styleClass="sombra" stylesheets="@principalStyle.css" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <VBox id="crearMaterial" fx:id="crearArticuloVbox" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="898.0" styleClass="sombra" stylesheets="@principalStyle.css" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <children>
                               <GridPane prefHeight="489.0" prefWidth="929.0">
                                 <columnConstraints>
@@ -336,6 +338,73 @@
                                     <Insets left="20.0" right="20.0" />
                                  </padding>
                               </GridPane>
+                           </children>
+                        </VBox>
+                        <VBox id="buscarMaterial" fx:id="buscarArticuloVbox" prefHeight="200.0" prefWidth="100.0" styleClass="sombra" stylesheets="@principalStyle.css" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Buscar articulo">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Codigo" GridPane.rowIndex="1">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="Nombre" GridPane.rowIndex="2">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="Descripcion" GridPane.rowIndex="3">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <Button fx:id="buscarArticuloButton" mnemonicParsing="false" onAction="#buscarArticuloButton" styleClass="salir" stylesheets="@principalStyle.css" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </Button>
+                                    <Button fx:id="cancelarBuscarArticulo" mnemonicParsing="false" onAction="#cancelarBuscarArticulo" styleClass="salir" stylesheets="@principalStyle.css" text="Cancelar" GridPane.rowIndex="4" />
+                                    <TextField fx:id="codigoBuscarTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="nombreBuscarTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="descripcionBuscarTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                 </children>
+                              </GridPane>
+                              <TableView prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn fx:id="idArticuloColumna" prefWidth="75.0" text="ID" />
+                                  <TableColumn fx:id="codigoArticuloColumna" prefWidth="75.0" text="Codigo" />
+                                    <TableColumn fx:id="nombreArticuloColumna" prefWidth="75.0" text="Nombre" />
+                                    <TableColumn fx:id="descripcionArticuloColumna" prefWidth="75.0" text="Descripción" />
+                                    <TableColumn fx:id="categoriaArticuloColumna" prefWidth="75.0" text="Categoria" />
+                                    <TableColumn fx:id="marcaArticuloColumna" prefWidth="75.0" text="Marca" />
+                                    <TableColumn fx:id="unidadMedidaArticuloColumna" prefWidth="75.0" text="Unidad de medida" />
+                                    <TableColumn fx:id="fechaIngresoArticuloColumna" prefWidth="75.0" text="Fecha de ingreso" />
+                                    <TableColumn fx:id="fechaVencimientoArticuloColumna" prefWidth="75.0" text="Fecha de vencimiento" />
+                                    <TableColumn fx:id="cantidadArticuloColumna" prefWidth="75.0" text="Stock disponible" />
+                                    <TableColumn fx:id="alertaArticuloColumna" prefWidth="75.0" text="Alerta" />
+                                    <TableColumn fx:id="proveedorArticuloColumna" prefWidth="75.0" text="Proveedor" />
+                                </columns>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </TableView>
                            </children>
                         </VBox>
                      </children>

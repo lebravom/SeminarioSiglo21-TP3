@@ -1,7 +1,11 @@
 package edu.siglo21.app.Controller;
 
+
 import edu.siglo21.app.App;
 import edu.siglo21.app.Model.Articulo;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,17 +22,20 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.Date;
+
 
 
 public class principalController implements Initializable {
     private double x = 0;
     private double y = 0;
 
-    private ArrayList<Articulo> tablaArticulos = new ArrayList<Articulo>();
+    private ArrayList<Articulo> tablaArticulos = new ArrayList<>();
+
+    private ObservableList<Articulo> datosArticulos = FXCollections.observableArrayList();
 
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     public void agregarArticulo(Articulo articulo){
@@ -50,9 +57,13 @@ public class principalController implements Initializable {
     private TextField alertaTextField;
 
     @FXML
-    private Button buscarMaterial;
+    private TextField codigoBuscarTextField;
 
+    @FXML
+    private TextField nombreBuscarTextField;
 
+    @FXML
+    private TextField descripcionBuscarTextField;
     @FXML
     private TextField cantidadTextField;
 
@@ -60,20 +71,18 @@ public class principalController implements Initializable {
     @FXML
     private ChoiceBox<?> categoriaChoiceBox;
 
-    @FXML
-    private Button cerrar;
 
     @FXML
     private TextField codigoTextField;
 
     @FXML
-    private Button crearMaterial;
+    private Button crearArticuloMenu;
 
     @FXML
     private TextField descripcionTextField;
 
     @FXML
-    private Button eliminarMaterial;
+    private Button eliminarArticuloMenu;
 
     @FXML
     private DatePicker ingresoDate;
@@ -85,7 +94,7 @@ public class principalController implements Initializable {
     private Button minimizar;
 
     @FXML
-    private Button modificarMaterial;
+    private Button modificarArticuloMenu;
 
     @FXML
     private TextField nombreTextField;
@@ -94,13 +103,18 @@ public class principalController implements Initializable {
     private ChoiceBox<?> proveedorChoiceBox;
 
     @FXML
-    private Button reporteMaterial;
+    private Button reporteArticuloMenu;
 
     @FXML
-    private VBox reportes;
+    private Button buscarArticuloMenu;
+    @FXML
+    private VBox reportesVbox;
 
     @FXML
-    private VBox crearArticulo;
+    private VBox crearArticuloVbox;
+
+    @FXML
+    private VBox buscarArticuloVbox;
 
     @FXML
     private BarChart<?, ?> barChartProveedores;
@@ -133,6 +147,47 @@ public class principalController implements Initializable {
 
     @FXML
     private Label promedioLabel;
+
+    @FXML
+    private TableView<Articulo> articuloTableView = new TableView<>();
+
+    @FXML
+    private TableColumn<Articulo, Number> idArticuloColumna= new TableColumn<>("ID");
+
+    @FXML
+    private TableColumn<Articulo, String> codigoArticuloColumna = new TableColumn<>("Codigo");
+
+    @FXML
+    private TableColumn<Articulo, String> nombreArticuloColumna = new TableColumn<>("Nombre");
+
+    @FXML
+    private TableColumn<Articulo, String> descripcionArticuloColumna = new TableColumn<>("Descripción");
+
+    @FXML
+    private TableColumn<Articulo, String> categoriaArticuloColumna = new TableColumn<>("Categoria");
+
+    @FXML
+    private TableColumn<Articulo, String> marcaArticuloColumna = new TableColumn<>("Marca");
+
+    @FXML
+    private TableColumn<Articulo, String> unidadMedidaArticuloColumna = new TableColumn<>("Unidad de medida");
+
+    @FXML
+    private  TableColumn<Articulo, Date> fechaIngresoArticuloColumna = new TableColumn<>("Fecha de ingreso");
+
+    @FXML
+    private TableColumn<Articulo, Date> fechaVencimientoArticuloColumna = new TableColumn<>("Fecha de vencimiento");
+
+    @FXML
+    private TableColumn<Articulo, Number> cantidadArticuloColumna = new TableColumn<>("Cantidad ");
+
+    @FXML
+    private TableColumn<Articulo, Number> alertaArticuloColumna = new TableColumn<>("Stock Minimo");
+
+    @FXML
+    private TableColumn<Articulo, String> proveedorArticuloColumna = new TableColumn<>("Proveedor");
+
+
 
 
     @FXML
@@ -180,6 +235,22 @@ public class principalController implements Initializable {
 
     }
 
+    public ObservableList<Articulo> getDatosArticulos() {
+        return datosArticulos;
+    }
+    @FXML
+    void buscarArticuloButton(ActionEvent event){
+        //primero verifico cual de los tres campos estan completos
+        Articulo a = new Articulo();
+
+        datosArticulos.clear();
+        datosArticulos.addAll(a.getArticulo(codigoBuscarTextField.getText(),nombreBuscarTextField.getText(),descripcionBuscarTextField.getText()));
+
+        articuloTableView.getItems().addAll(datosArticulos);
+
+    }
+
+
     @FXML
     void grabarCrearArticulo(ActionEvent event) {
 
@@ -196,7 +267,6 @@ public class principalController implements Initializable {
         }
 
         Articulo articulo = new Articulo(
-                this.tablaArticulos.size()+1,
                 codigoTextField.getText(),
                 nombreTextField.getText(),
                 descripcionTextField.getText(),
@@ -209,19 +279,17 @@ public class principalController implements Initializable {
                 Integer.parseInt(alertaTextField.getText()),
                 proveedorChoiceBox.getSelectionModel().getSelectedItem().toString()
         );
-        this.tablaArticulos.add(articulo);
+
+
+        articulo.insertArticulo(articulo);
+
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Confirmación Crear Articulo");
         alerta.setHeaderText(null);
+        //actualizarIndicadores();
 
-
-
-        actualizarIndicadores();
-
-
-        alerta.setContentText("Articulo creado con exito\n Desea crear otro articulo ?");
+        alerta.setContentText("Articulo creado con exito\n Con el numero " + articulo.getIdArticulo() +" \n Desea crear otro articulo ?");
         Optional<ButtonType> opcion = alerta.showAndWait();
-
 
 
         if (opcion.get().equals(ButtonType.OK)) {
@@ -312,7 +380,6 @@ public class principalController implements Initializable {
 
     }
 
-
     @FXML
     void minimizar(ActionEvent event){
         Stage stage = (Stage)principalVista.getScene().getWindow();
@@ -321,29 +388,37 @@ public class principalController implements Initializable {
     }
 
     public void cambiarVista(ActionEvent event){
-        if (event.getSource() == crearMaterial){
-            crearArticulo.setVisible(true);
-            reportes.setVisible(false);
-        }else if(event.getSource() == modificarMaterial){
-            crearArticulo.setVisible(false);
-            reportes.setVisible(false);
-        }else if(event.getSource() == eliminarMaterial){
-            crearArticulo.setVisible(false);
-            reportes.setVisible(false);
-        }else if(event.getSource() == buscarMaterial){
-            crearArticulo.setVisible(false);
-            reportes.setVisible(false);
-        }else if(event.getSource() == reporteMaterial){
-            crearArticulo.setVisible(false);
-            reportes.setVisible(true);
+        if (event.getSource() == crearArticuloMenu){
+            crearArticuloVbox.setVisible(true);
+            buscarArticuloVbox.setVisible(false);
+            reportesVbox.setVisible(false);
+        }else if(event.getSource() == modificarArticuloMenu){
+            crearArticuloVbox.setVisible(false);
+            buscarArticuloVbox.setVisible(false);
+            reportesVbox.setVisible(false);
+        }else if(event.getSource() == eliminarArticuloMenu){
+            crearArticuloVbox.setVisible(false);
+            buscarArticuloVbox.setVisible(false);
+            reportesVbox.setVisible(false);
+        }else if(event.getSource() == buscarArticuloMenu){
+            buscarArticuloVbox.setVisible(true);
+            crearArticuloVbox.setVisible(false);
+            reportesVbox.setVisible(false);
+        }else if(event.getSource() == reporteArticuloMenu){
+            crearArticuloVbox.setVisible(false);
+            buscarArticuloVbox.setVisible(false);
+            reportesVbox.setVisible(true);
         }
 
     }
     @FXML
     void cancelarCrearArticulo(ActionEvent event) {
-        crearArticulo.setVisible(false);
+        crearArticuloVbox.setVisible(false);
     }
-
+    @FXML
+    void cancelarBuscarArticulo(ActionEvent event) {
+        buscarArticuloVbox.setVisible(false);
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ChoiceBox unidadDeMedidaChoiceBox = new ChoiceBox();
@@ -410,10 +485,82 @@ public class principalController implements Initializable {
         );
         marcaChoiceBox.setItems(marChoiceBox.getItems());
 
+        idArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyIntegerWrapper(cellData.getValue().getIdArticulo()));
+        codigoArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCodigo()));
+        nombreArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNombre()));
+        descripcionArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDescripcion()));
+        categoriaArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCategoria()));
+        marcaArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getMarca()));
+        unidadMedidaArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getUnidadMedida()));
+        fechaIngresoArticuloColumna.setCellValueFactory(cellData -> (ObservableValue<Date>) cellData.getValue().getFechaEntrada());
+        fechaVencimientoArticuloColumna.setCellValueFactory(cellData -> (ObservableValue<Date>) cellData.getValue().getFechaVencimiento());
+        cantidadArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyIntegerWrapper(cellData.getValue().getCantidad()));
+        alertaArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyIntegerWrapper(cellData.getValue().getAlerta()));
+        proveedorArticuloColumna.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getProveedor()));
+
+        idArticuloColumna.setText("");
+        codigoArticuloColumna.setText("");
+        nombreArticuloColumna.setText("");
+        descripcionArticuloColumna.setText("");
+        categoriaArticuloColumna.setText("");
+        marcaArticuloColumna.setText("");
+        unidadMedidaArticuloColumna.setText("");
+        fechaIngresoArticuloColumna.setText("");
+        fechaVencimientoArticuloColumna.setText("");
+        cantidadArticuloColumna.setText("");
+        alertaArticuloColumna.setText("");
+        proveedorArticuloColumna.setText("");
+
+        if (articuloTableView != null) {
+            articuloTableView.getSelectionModel().selectedItemProperty().addListener(
+                    (observable, oldValue, newValue) -> mostrarArticulo(newValue));
+        }
+
+        articuloTableView.getColumns().add(idArticuloColumna);
+        articuloTableView.getColumns().add(codigoArticuloColumna);
+        articuloTableView.getColumns().add(nombreArticuloColumna);
+        articuloTableView.getColumns().add(descripcionArticuloColumna);
+        articuloTableView.getColumns().add(categoriaArticuloColumna);
+        articuloTableView.getColumns().add(marcaArticuloColumna);
+        articuloTableView.getColumns().add(unidadMedidaArticuloColumna);
+        articuloTableView.getColumns().add(fechaIngresoArticuloColumna);
+        articuloTableView.getColumns().add(fechaVencimientoArticuloColumna);
+        articuloTableView.getColumns().add(cantidadArticuloColumna);
+        articuloTableView.getColumns().add(alertaArticuloColumna);
+        articuloTableView.getColumns().add(proveedorArticuloColumna);
 
     }
 
+    private void mostrarArticulo(Articulo art) {
+        if (art != null){
+            idArticuloColumna.setText(art.getIdArticulo().toString());
+            codigoArticuloColumna.setText(art.getCodigo());
+            nombreArticuloColumna.setText(art.getNombre());
+            descripcionArticuloColumna.setText(art.getDescripcion());
+            categoriaArticuloColumna.setText(art.getCategoria());
+            marcaArticuloColumna.setText(art.getMarca());
+            unidadMedidaArticuloColumna.setText(art.getUnidadMedida());
+            fechaIngresoArticuloColumna.setText(art.getFechaEntrada().toString());
+            fechaVencimientoArticuloColumna.setText(art.getFechaVencimiento().toString());
+            cantidadArticuloColumna.setText(art.getCantidad().toString());
+            alertaArticuloColumna.setText(art.getAlerta().toString());
+            proveedorArticuloColumna.setText(art.getProveedor());
+        } else {
+            idArticuloColumna.setText("");
+            codigoArticuloColumna.setText("");
+            nombreArticuloColumna.setText("");
+            descripcionArticuloColumna.setText("");
+            categoriaArticuloColumna.setText("");
+            marcaArticuloColumna.setText("");
+            unidadMedidaArticuloColumna.setText("");
+            fechaIngresoArticuloColumna.setText("");
+            fechaVencimientoArticuloColumna.setText("");
+            cantidadArticuloColumna.setText("");
+            alertaArticuloColumna.setText("");
+            proveedorArticuloColumna.setText("");
+        }
 
+    }
 
 
 }

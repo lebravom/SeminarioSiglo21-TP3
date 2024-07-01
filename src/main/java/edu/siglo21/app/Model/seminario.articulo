@@ -1,0 +1,98 @@
+-- Archivo que contiene los stored procedure generados en mysql
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `articulo_buscar`(
+	IN p_codigo varchar(50),
+    IN p_nombre varchar(50),
+    IN p_descripcion varchar(50)
+)
+BEGIN
+	set @textosp =
+    'SELECT `articulo`.`idArticulo`,
+    `articulo`.`codigo`,
+    `articulo`.`nombre`,
+    `articulo`.`descripcion`,
+    `categoria`.`nombre_categoria`,
+    `marca`.`nombre_marca`,
+    `unidadmedida`.`nombre` as unidadMedida,
+    `articulo`.`fecha_entrada`,
+    `articulo`.`fecha_vencimiento`,
+    `articulo`.`stock_disponible`,
+    `articulo`.`stock_minimo`,
+    `proveedor`.`nombre_proveedor`
+FROM `seminario`.`articulo`
+left join marca on articulo.idMarca = marca.idMarca
+left join unidadmedida on articulo.idUnidadMedida = unidadmedida.idunidadMedida
+left join categoria on articulo.categoria = categoria.idCategoria
+left join proveedor on articulo.idProveedor = proveedor.idProveedor
+where 1=1 ';
+if p_codigo is not null then set @textosp = CONCAT(@textosp,' and `articulo`.`codigo` like "%',p_codigo,'%"'); end if;
+if p_nombre is not null then set @textosp = CONCAT(@textosp,' and `articulo`.`nombre` like "%',p_nombre,'%"'); end if;
+if p_descripcion is not null then set @textosp = concat(@textosp,' and `articulo`.`descripcion` like "%',p_descripcion,'%"') ; end if;
+
+set @textosp = concat(@textosp,';');
+
+prepare stmt from @textosp;
+execute stmt;
+deallocate prepare stmt;
+END
+
+
+
+
+------------------------ Stored procedure para crear un nuevo articulo
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `articulo_nuevo`(
+	IN p_codigo varchar(50),
+    IN p_nombre varchar(100),
+    IN p_descripcion TEXT,
+    IN p_categoria varchar(100),
+    in p_marca varchar(100),
+    in p_unidadMedida varchar(100),
+    in p_fechaEntrada date,
+    in p_fechavencimiento date,
+    in p_alerta int,
+    in p_cantidad int,
+    in p_proveedor varchar(100),
+    out p_idArticulo int
+)
+BEGIN
+
+    set @idCategoria = (select idCategoria from seminario.categoria where nombre_categoria = p_categoria);
+    set @idMarca = ( select idMarca from seminario.marca where nombre_marca = p_marca);
+	set @idUnidadMedida = ( select idUnidadMedida from seminario.unidadmedida where nombre = p_unidadMedida);
+    set @idProveedor = ( select idProveedor from seminario.proveedor where nombre_proveedor = p_proveedor);
+
+    IF EXISTS (SELECT 1 FROM articulo WHERE codigo = p_codigo) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El codigo de articulo ya existe';
+    ELSE
+		INSERT INTO `seminario`.`articulo`
+		(`codigo`,
+		`nombre`,
+		`descripcion`,
+		`categoria`,
+		`idMarca`,
+		`idUnidadMedida`,
+		`fecha_entrada`,
+		`fecha_vencimiento`,
+		`stock_minimo`,
+		`stock_disponible`,
+		`idProveedor`)
+		VALUES
+		(p_codigo,
+		p_nombre,
+        p_descripcion,
+        @idCategoria,
+        @idMarca,
+        @idUnidadMedida,
+        p_fechaEntrada,
+        p_fechavencimiento,
+        p_alerta,
+        p_cantidad,
+        @idProveedor
+		);
+
+		set p_idArticulo = (SELECT MAX(idArticulo) from seminario.articulo);
+	END IF;
+END

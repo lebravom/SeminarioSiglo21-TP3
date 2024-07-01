@@ -1,4 +1,4 @@
-package edu.siglo21.app.Model;
+package edu.siglo21.app.Controller;
 
 public class Usuario {
     private String usuario;
